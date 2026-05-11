@@ -286,17 +286,11 @@ Email the lab PI (qdt2nz@virginia.edu (Sarah Dremel)) for help getting UVA accou
 
 ## Key Points to Remember
 
-
-> ✓ **No individual AWS accounts:** Everyone uses Globus with the shared S3 connector—simpler and more secure.
-
+> ✓ **No individual AWS accounts:** Everyone uses Globus with the shared S3 connector—simpler and more secure.  
 > ✓ **UVA login is your key:** Your virginia.edu credentials authenticate you to Globus and authorize S3 access.  
-
 > ✓ **No downloads needed:** Globus is web-based. You don't need to install anything (unless you use Globus CLI).  
-
-> ✓ **Permissions take time:** If you're newly added to a collection, it may take 5-10 minutes for access to activate. 
-
-> ✓ **AWS SA credentials available:** Rivanna users can find credentials at `/project/dremel_lab/scripts/aws_globus_sa_credentials.txt`. Non-Rivanna users can email the lab PI. 
- 
+> ✓ **Permissions take time:** If you're newly added to a collection, it may take 5-10 minutes for access to activate.  
+> ✓ **AWS SA credentials available:** Rivanna users can find credentials at `/project/dremel_lab/scripts/aws_globus_sa_credentials.txt`. Non-Rivanna users can email the lab PI.  
 > ✓ **Ask in Slack if stuck:** The `#dremellab` channel is your fastest way to get help from the team.
 
 ---

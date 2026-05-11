@@ -2,7 +2,7 @@
 title: Getting Access to Dremel Lab S3 Files via Globus
 subtitle: Step-by-step guide for Dremel Lab members
 author: Dremel Lab
-date: May 2026
+date: May 11, 2026
 format:
   html:
     toc: true
@@ -33,7 +33,43 @@ format:
           border-radius: 3px;
           font-family: 'Monaco', 'Menlo', monospace;
         }
+        .date-info {
+          display: flex;
+          gap: 30px;
+          margin-bottom: 20px;
+          font-size: 0.95em;
+          color: #666;
+          padding-bottom: 15px;
+          border-bottom: 1px solid #e0e0e0;
+        }
+        .date-info div {
+          display: flex;
+          flex-direction: column;
+        }
+        .date-label {
+          font-weight: 600;
+          color: #333;
+          font-size: 0.9em;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+        .date-value {
+          color: #555;
+          margin-top: 2px;
+        }
         </style>
+    include-before-body:
+      text: |
+        <div class="date-info">
+          <div>
+            <span class="date-label">📅 Published</span>
+            <span class="date-value">May 11, 2026</span>
+          </div>
+          <div>
+            <span class="date-label">✏️ Last Edited</span>
+            <span class="date-value">May 11, 2026</span>
+          </div>
+        </div>
 ---
 
 **Time to complete:** 5-10 minutes

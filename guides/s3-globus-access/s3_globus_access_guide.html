@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Dremel Lab">
-<meta name="dcterms.date" content="2026-05-11">
+<meta name="dcterms.date" content="2026-07-20">
 
 <title>Getting Access to Dremel Lab S3 Files via Globus</title>
 <style>
@@ -110,7 +110,7 @@ code {
   </div>
   <div>
     <span class="date-label">✏️ Last Edited</span>
-    <span class="date-value">May 11, 2026</span>
+    <span class="date-value">July 20, 2026</span>
   </div>
 </div>
 
@@ -134,7 +134,7 @@ code {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 11, 2026</p>
+      <p class="date">July 20, 2026</p>
     </div>
   </div>
   
@@ -219,7 +219,7 @@ code {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>If the collection doesn’t appear:</strong> You need to request collection access. Open a support ticket at <a href="https://www.rc.virginia.edu/form/support-request/">https://www.rc.virginia.edu/form/support-request/</a> requesting access to the <code>dremel-lab-bucket</code> Globus collection. This request requires approval from Sarah Dremel (qdt2nz@virginia.edu) before access is granted. Allow 1-2 business days for processing.</p>
+<p><strong>If the collection doesn’t appear:</strong> You need to request collection access. Open a support ticket at <a href="https://forms.rc.virginia.edu/form/support-request/">https://forms.rc.virginia.edu/form/support-request/</a> or email <a href="mailto:hpc-support@virginia.edu">HPC Support</a> requesting access to the <code>dremel-lab-bucket</code> Globus collection. This request requires approval from Sarah Dremel (qdt2nz@virginia.edu) before access is granted. Allow 1-2 business days for processing.</p>
 </div>
 </div>
 </div>
@@ -283,6 +283,8 @@ code {
 <ul>
 <li><strong><code>_HTS/</code></strong> — Contains all high-throughput sequencing (HTS) pipeline outputs
 <ul>
+<li><strong><code>{pipeline}</code></strong> — Name of pipeline that generated this output eg. HAROLD
+<ul>
 <li><strong><code>{sample_set_name}/</code></strong> — Project-specific folders
 <ul>
 <li>Subfolders depend on <strong>which pipeline was run</strong> to generate the outputs. Common subfolders include:
@@ -292,6 +294,7 @@ code {
 <li><code>alignment/</code> — Aligned BAM files and indices</li>
 <li><code>counts/</code> — Gene/transcript count matrices</li>
 <li><code>logs/</code> — Pipeline execution logs</li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul></li>
@@ -315,7 +318,7 @@ code {
 <p><strong>Test your access:</strong></p>
 <ol type="1">
 <li>Browse to the <code>_HTS/</code> folder to see the project structure</li>
-<li>Navigate to an existing sample set folder to see the pipeline-generated outputs</li>
+<li>Navigate to an existing sample set folder inside the appropriate pipeline outputs to see the pipeline-generated outputs</li>
 <li>Select a file from an existing output folder (e.g., a QC report or log file)</li>
 <li>Try to <strong>download</strong> the file to your computer</li>
 </ol>
@@ -326,7 +329,7 @@ code {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Note:</strong> Do not create or modify files in the <code>_HTS/</code> folder—these are pipeline outputs and should remain unchanged. New data is added only through Rivanna pipeline runs.</p>
+<p><strong>Note:</strong> Do not create or modify files in the <code>_HTS/&lt;PIPELINE&gt;</code> folder—these are pipeline outputs and should remain unchanged. New data is added only through Rivanna pipeline runs.</p>
 </div>
 </div>
 </div>
@@ -337,16 +340,16 @@ code {
 <h2 class="anchored" data-anchor-id="what-you-can-do-now">What You Can Do Now</h2>
 <p>With Globus access, you can:</p>
 <ul>
-<li><strong>Download files</strong> from pipeline outputs in the <code>_HTS/</code> folder (this is the primary use case)</li>
+<li><strong>Download files</strong> from pipeline outputs in the <code>_HTS/&lt;PIPELINE&gt;</code> folder (this is the primary use case)</li>
 <li><strong>Browse the folder structure</strong> to find your sample sets and results via the web GUI</li>
 <li><strong>Share files</strong> with lab members via Globus sharing links</li>
 </ul>
-<p><strong>Note:</strong> Pipeline outputs are automatically uploaded from Rivanna to the <code>_HTS/</code> folder—manual uploads are handled by the pipeline infrastructure, not by individual users.</p>
+<p><strong>Note:</strong> Pipeline outputs are automatically uploaded from Rivanna to the <code>_HTS/&lt;PIPELINE&gt;</code> folder—manual uploads are handled by the pipeline infrastructure, not by individual users.</p>
 <hr>
 </section>
 <section id="understanding-s3-storage-classes-file-restoration" class="level2">
 <h2 class="anchored" data-anchor-id="understanding-s3-storage-classes-file-restoration">Understanding S3 Storage Classes &amp; File Restoration</h2>
-<p>Pipeline outputs in the <code>_HTS/</code> folder are stored in two different S3 storage classes depending on file size:</p>
+<p>Pipeline outputs in the <code>_HTS/&lt;PIPELINE&gt;</code> folder are stored in two different S3 storage classes depending on file size:</p>
 <section id="storage-classes-explained" class="level3">
 <h3 class="anchored" data-anchor-id="storage-classes-explained">Storage Classes Explained</h3>
 <p><strong>Glacier Instant Retrieval (Glacier IR)</strong> — <em>Downloadable via Globus</em></p>

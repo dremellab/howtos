@@ -7,6 +7,11 @@ on:
       - 'guides/**/*.md'
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -50,3 +55,12 @@ jobs:
             git commit -m "Auto: Update guides from markdown and render to HTML"
             git push
           fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

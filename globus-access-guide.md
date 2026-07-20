@@ -64,7 +64,7 @@ You should now see the Globus web interface. If you see "Search Collections" or 
 3. Click **Search**
 4. The collection should appear in the results
 
-> **If the collection doesn't appear:** You need to request collection access. Open a support ticket at [https://www.rc.virginia.edu/form/support-request/](https://www.rc.virginia.edu/form/support-request/) requesting access to the `dremel-lab-bucket` Globus collection. This request requires approval from Sarah Dremel (qdt2nz@virginia.edu) before access is granted. Allow 1-2 business days for processing.
+> **If the collection doesn't appear:** You need to request collection access. Open a support ticket at [https://forms.rc.virginia.edu/form/support-request/](https://forms.rc.virginia.edu/form/support-request/) or email [HPC Support](mailto:hpc-support@virginia.edu) requesting access to the `dremel-lab-bucket` Globus collection. This request requires approval from Sarah Dremel (qdt2nz@virginia.edu) before access is granted. Allow 1-2 business days for processing.
 
 ---
 
@@ -110,13 +110,14 @@ The Dremel Lab S3 bucket is organized by project. Pipeline outputs are stored in
 **Key folders structure:**
 
 - **`_HTS/`** — Contains all high-throughput sequencing (HTS) pipeline outputs
-  - **`{sample_set_name}/`** — Project-specific folders
-    - Subfolders depend on **which pipeline was run** to generate the outputs. Common subfolders include:
-      - `raw_data/` — Raw sequencing reads
-      - `qc/` — Quality control results
-      - `alignment/` — Aligned BAM files and indices
-      - `counts/` — Gene/transcript count matrices
-      - `logs/` — Pipeline execution logs
+  - ** `{pipeline}` ** - Name of pipeline that generated this output eg. HAROLD
+   - **`{sample_set_name}/`** — Project-specific folders
+      - Subfolders depend on **which pipeline was run** to generate the outputs. Common subfolders include:
+         - `raw_data/` — Raw sequencing reads
+         - `qc/` — Quality control results
+         - `alignment/` — Aligned BAM files and indices
+         - `counts/` — Gene/transcript count matrices
+         - `logs/` — Pipeline execution logs
 
 > **Important:** The exact subfolders under each sample sheet or sample set will vary depending on the specific pipeline used (e.g., RNA-seq pipeline, ATAC-seq pipeline, etc.). 
 
@@ -129,13 +130,13 @@ The Dremel Lab S3 bucket is organized by project. Pipeline outputs are stored in
 **Test your access:**
 
 1. Browse to the `_HTS/` folder to see the project structure
-2. Navigate to an existing sample set folder to see the pipeline-generated outputs
+2. Navigate to an existing sample set folder inside the appropriate pipeline outputs to see the pipeline-generated outputs
 3. Select a file from an existing output folder (e.g., a QC report or log file)
 4. Try to **download** the file to your computer
 
 If you can browse folders and download files, you have the access you need.
 
-> **Note:** Do not create or modify files in the `_HTS/` folder—these are pipeline outputs and should remain unchanged. New data is added only through Rivanna pipeline runs.
+> **Note:** Do not create or modify files in the `_HTS/<PIPELINE>` folder—these are pipeline outputs and should remain unchanged. New data is added only through Rivanna pipeline runs.
 
 ---
 
@@ -143,18 +144,18 @@ If you can browse folders and download files, you have the access you need.
 
 With Globus access, you can:
 
-- **Download files** from pipeline outputs in the `_HTS/` folder (this is the primary use case)
+- **Download files** from pipeline outputs in the `_HTS/<PIPELINE>` folder (this is the primary use case)
 - **Browse the folder structure** to find your sample sets and results via the web GUI
 - **Share files** with lab members via Globus sharing links
 
-**Note:** Pipeline outputs are automatically uploaded from Rivanna to the `_HTS/` folder—manual uploads are handled by the pipeline infrastructure, not by individual users.
+**Note:** Pipeline outputs are automatically uploaded from Rivanna to the `_HTS/<PIPELINE>` folder—manual uploads are handled by the pipeline infrastructure, not by individual users.
 
 
 ---
 
 ## Understanding S3 Storage Classes & File Restoration
 
-Pipeline outputs in the `_HTS/` folder are stored in two different S3 storage classes depending on file size:
+Pipeline outputs in the `_HTS/<PIPELINE>` folder are stored in two different S3 storage classes depending on file size:
 
 ### Storage Classes Explained
 
@@ -296,7 +297,7 @@ Email the lab PI (qdt2nz@virginia.edu (Sarah Dremel)) for help getting UVA accou
 > ✓ **Permissions take time:** If you're newly added to a collection, it may take 5-10 minutes for access to activate. 
 
 > ✓ **AWS SA credentials available:** Rivanna users can find credentials at `/project/dremel_lab/scripts/aws_globus_sa_credentials.txt`. Non-Rivanna users can email the lab PI. 
- 
+
 > ✓ **Ask in Slack if stuck:** The `#dremellab` channel is your fastest way to get help from the team.
 
 ---

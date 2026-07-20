@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.23">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,6 +11,9 @@
 
 <title>Getting Access to Dremel Lab S3 Files via Globus</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -32,10 +35,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="s3_globus_access_guide_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="s3_globus_access_guide_files/libs/quarto-html/anchor.min.js"></script>
 <link href="s3_globus_access_guide_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="s3_globus_access_guide_files/libs/quarto-html/quarto-syntax-highlighting-226bd0f977fa82dfae4534cac220d79a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="s3_globus_access_guide_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="s3_globus_access_guide_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="s3_globus_access_guide_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="s3_globus_access_guide_files/libs/bootstrap/bootstrap-a563fdec54d0970a76634735bffa3990.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="s3_globus_access_guide_files/libs/bootstrap/bootstrap-e7e7ff7738cbac26df6357f5726392ca.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <style>
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -91,7 +94,9 @@ code {
     <h2 id="toc-title">Contents</h2>
    
   <ul class="collapse">
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#getting-access-to-dremel-lab-s3-files-via-globus" id="toc-getting-access-to-dremel-lab-s3-files-via-globus" class="nav-link active" data-scroll-target="#getting-access-to-dremel-lab-s3-files-via-globus">Getting Access to Dremel Lab S3 Files via Globus</a>
+  <ul class="collapse">
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
   <li><a href="#step-by-step-instructions" id="toc-step-by-step-instructions" class="nav-link" data-scroll-target="#step-by-step-instructions">Step-by-Step Instructions</a></li>
   <li><a href="#what-you-can-do-now" id="toc-what-you-can-do-now" class="nav-link" data-scroll-target="#what-you-can-do-now">What You Can Do Now</a></li>
@@ -99,6 +104,7 @@ code {
   <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
   <li><a href="#key-points-to-remember" id="toc-key-points-to-remember" class="nav-link" data-scroll-target="#key-points-to-remember">Key Points to Remember</a></li>
   <li><a href="#need-help" id="toc-need-help" class="nav-link" data-scroll-target="#need-help">Need Help?</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -106,7 +112,7 @@ code {
 <div class="date-info">
   <div>
     <span class="date-label">📅 Published</span>
-    <span class="date-value">May 11, 2026</span>
+    <span class="date-value">July 20, 2026</span>
   </div>
   <div>
     <span class="date-label">✏️ Last Edited</span>
@@ -146,6 +152,8 @@ code {
 </header>
 
 
+<section id="getting-access-to-dremel-lab-s3-files-via-globus" class="level1">
+<h1>Getting Access to Dremel Lab S3 Files via Globus</h1>
 <p><strong>Time to complete:</strong> 5-10 minutes</p>
 <p><strong>Prerequisites:</strong> Active virginia.edu account with Globus access</p>
 <hr>
@@ -169,7 +177,7 @@ code {
 <li>✓ <strong>Part of Dremel Lab</strong> (you should have access to the <code>#dremellab</code> Slack channel)</li>
 <li>✓ <strong>Internet access</strong> to Globus and UVA systems</li>
 </ul>
-<p><strong>If you need AWS SA credentials:</strong> Rivanna users can find them at <code>/project/dremel_lab/scripts/aws_globus_sa_credentials.txt</code>. If you don’t have Rivanna access, email Sarah Dremel (qdt2nz@virginia.edu) and they will send you the credentials file.</p>
+<p><strong>If you need AWS SA credentials:</strong> Rivanna users can find them at <code>/project/dremel_lab/scripts/aws_globus_sa_credentials.txt</code>. If you don’t have Rivanna access, email the lab PI (qdt2nz@virginia.edu (Sarah Dremel)) and they will send you the credentials file.</p>
 <hr>
 </section>
 <section id="step-by-step-instructions" class="level2">
@@ -193,16 +201,9 @@ code {
 <li>You’ll be redirected back to Globus</li>
 </ol>
 <p>You should now see the Globus web interface. If you see “Search Collections” or a file transfer page, you’re logged in successfully.</p>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
+<blockquote class="blockquote">
 <p><strong>Tip:</strong> Bookmark https://www.globus.org/ for future logins.</p>
-</div>
-</div>
-</div>
+</blockquote>
 <hr>
 </section>
 <section id="step-3-find-the-dremel-lab-s3-bucket" class="level3">
@@ -213,16 +214,9 @@ code {
 <li>Click <strong>Search</strong></li>
 <li>The collection should appear in the results</li>
 </ol>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>If the collection doesn’t appear:</strong> You need to request collection access. Open a support ticket at <a href="https://forms.rc.virginia.edu/form/support-request/">https://forms.rc.virginia.edu/form/support-request/</a> or email <a href="mailto:hpc-support@virginia.edu">HPC Support</a> requesting access to the <code>dremel-lab-bucket</code> Globus collection. This request requires approval from Sarah Dremel (qdt2nz@virginia.edu) before access is granted. Allow 1-2 business days for processing.</p>
-</div>
-</div>
-</div>
+<blockquote class="blockquote">
+<p><strong>If the collection doesn’t appear:</strong> You need to request collection access. Open a support ticket at <a href="https://www.rc.virginia.edu/form/support-request/">https://www.rc.virginia.edu/form/support-request/</a> requesting access to the <code>dremel-lab-bucket</code> Globus collection. This request requires approval from Sarah Dremel (qdt2nz@virginia.edu) before access is granted. Allow 1-2 business days for processing.</p>
+</blockquote>
 <hr>
 </section>
 <section id="step-4-connect-to-the-collection" class="level3">
@@ -257,16 +251,9 @@ code {
 </figure>
 </div>
 <p>Once credentials are added, Globus can access and transfer files from the S3 bucket.</p>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
+<blockquote class="blockquote">
 <p><strong>Note:</strong> The AWS SA credentials and access permissions are stored in <code>/project/dremel_lab/scripts/aws_globus_sa_credentials.txt</code> on Rivanna. Rivanna users can reference this file if needed for direct S3 access or troubleshooting.</p>
-</div>
-</div>
-</div>
+</blockquote>
 <hr>
 </section>
 <section id="step-5-test-basic-operations-understand-folder-structure" class="level3">
@@ -283,8 +270,6 @@ code {
 <ul>
 <li><strong><code>_HTS/</code></strong> — Contains all high-throughput sequencing (HTS) pipeline outputs
 <ul>
-<li><strong><code>{pipeline}</code></strong> — Name of pipeline that generated this output eg. HAROLD
-<ul>
 <li><strong><code>{sample_set_name}/</code></strong> — Project-specific folders
 <ul>
 <li>Subfolders depend on <strong>which pipeline was run</strong> to generate the outputs. Common subfolders include:
@@ -297,18 +282,10 @@ code {
 </ul></li>
 </ul></li>
 </ul></li>
-</ul></li>
 </ul>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
+<blockquote class="blockquote">
 <p><strong>Important:</strong> The exact subfolders under each sample sheet or sample set will vary depending on the specific pipeline used (e.g., RNA-seq pipeline, ATAC-seq pipeline, etc.).</p>
-</div>
-</div>
-</div>
+</blockquote>
 <p><strong>Typical Workflow:</strong></p>
 <ul>
 <li><strong>Pipeline outputs are automatically uploaded</strong> from Rivanna pipeline runs directly into the <code>_HTS/</code> folder—you don’t manually upload to this location</li>
@@ -318,21 +295,14 @@ code {
 <p><strong>Test your access:</strong></p>
 <ol type="1">
 <li>Browse to the <code>_HTS/</code> folder to see the project structure</li>
-<li>Navigate to an existing sample set folder inside the appropriate pipeline outputs to see the pipeline-generated outputs</li>
+<li>Navigate to an existing sample set folder to see the pipeline-generated outputs</li>
 <li>Select a file from an existing output folder (e.g., a QC report or log file)</li>
 <li>Try to <strong>download</strong> the file to your computer</li>
 </ol>
 <p>If you can browse folders and download files, you have the access you need.</p>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>Note:</strong> Do not create or modify files in the <code>_HTS/&lt;PIPELINE&gt;</code> folder—these are pipeline outputs and should remain unchanged. New data is added only through Rivanna pipeline runs.</p>
-</div>
-</div>
-</div>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> Do not create or modify files in the <code>_HTS/</code> folder—these are pipeline outputs and should remain unchanged. New data is added only through Rivanna pipeline runs.</p>
+</blockquote>
 <hr>
 </section>
 </section>
@@ -340,16 +310,16 @@ code {
 <h2 class="anchored" data-anchor-id="what-you-can-do-now">What You Can Do Now</h2>
 <p>With Globus access, you can:</p>
 <ul>
-<li><strong>Download files</strong> from pipeline outputs in the <code>_HTS/&lt;PIPELINE&gt;</code> folder (this is the primary use case)</li>
+<li><strong>Download files</strong> from pipeline outputs in the <code>_HTS/</code> folder (this is the primary use case)</li>
 <li><strong>Browse the folder structure</strong> to find your sample sets and results via the web GUI</li>
 <li><strong>Share files</strong> with lab members via Globus sharing links</li>
 </ul>
-<p><strong>Note:</strong> Pipeline outputs are automatically uploaded from Rivanna to the <code>_HTS/&lt;PIPELINE&gt;</code> folder—manual uploads are handled by the pipeline infrastructure, not by individual users.</p>
+<p><strong>Note:</strong> Pipeline outputs are automatically uploaded from Rivanna to the <code>_HTS/</code> folder—manual uploads are handled by the pipeline infrastructure, not by individual users.</p>
 <hr>
 </section>
 <section id="understanding-s3-storage-classes-file-restoration" class="level2">
 <h2 class="anchored" data-anchor-id="understanding-s3-storage-classes-file-restoration">Understanding S3 Storage Classes &amp; File Restoration</h2>
-<p>Pipeline outputs in the <code>_HTS/&lt;PIPELINE&gt;</code> folder are stored in two different S3 storage classes depending on file size:</p>
+<p>Pipeline outputs in the <code>_HTS/</code> folder are stored in two different S3 storage classes depending on file size:</p>
 <section id="storage-classes-explained" class="level3">
 <h3 class="anchored" data-anchor-id="storage-classes-explained">Storage Classes Explained</h3>
 <p><strong>Glacier Instant Retrieval (Glacier IR)</strong> — <em>Downloadable via Globus</em></p>
@@ -402,16 +372,11 @@ Temporary copy auto-deletes after 24 hours</code></pre>
 </section>
 <section id="important-notes" class="level3">
 <h3 class="anchored" data-anchor-id="important-notes">Important Notes</h3>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>⚠️ <strong>Plan ahead:</strong> File restoration takes a few hours, so request downloads when you know you’ll need them soon. ⚠️ <strong>24-hour window:</strong> Make sure to download during the restoration window—the file is only accessible for 24 hours. ⚠️ <strong>Contact early:</strong> If you need multiple large files, email in advance so she can batch-restore them.</p>
-</div>
-</div>
-</div>
+<blockquote class="blockquote">
+<p>⚠️ <strong>Plan ahead:</strong> File restoration takes a few hours, so request downloads when you know you’ll need them soon.<br>
+⚠️ <strong>24-hour window:</strong> Make sure to download during the restoration window—the file is only accessible for 24 hours.<br>
+⚠️ <strong>Contact early:</strong> If you need multiple large files, email in advance so she can batch-restore them.</p>
+</blockquote>
 <hr>
 </section>
 </section>
@@ -454,8 +419,14 @@ Temporary copy auto-deletes after 24 hours</code></pre>
 </section>
 <section id="i-dont-have-a-uva-account-or-rivanna-access" class="level3">
 <h3 class="anchored" data-anchor-id="i-dont-have-a-uva-account-or-rivanna-access">“I don’t have a UVA account or Rivanna access”</h3>
-<p><strong>Option 1: Use Globus (recommended)</strong> Email Sarah Dremel (qdt2nz@virginia.edu) for help getting UVA account access or Globus configured.</p>
-<p><strong>Option 2: Direct S3 access via AWS credentials</strong> 1. Email Sarah Dremel asking for the AWS SA credentials file 2. She’ll send you <code>aws_globus_sa_credentials.txt</code> (which contains Access Key ID and Secret) 3. Configure your local AWS CLI or SDK with these credentials to access S3 directly 4. This bypasses Globus but requires CLI tools like <code>aws s3</code> commands</p>
+<p><strong>Option 1: Use Globus (recommended)</strong> Email the lab PI (qdt2nz@virginia.edu (Sarah Dremel)) for help getting UVA account access or Globus configured.</p>
+<p><strong>Option 2: Direct S3 access via AWS credentials</strong></p>
+<ol type="1">
+<li>Email the lab PI asking for the AWS SA credentials file</li>
+<li>They’ll send you <code>aws_globus_sa_credentials.txt</code> (which contains Access Key ID and Secret)</li>
+<li>Configure your local AWS CLI or SDK with these credentials to access S3 directly</li>
+<li>This bypasses Globus but requires CLI tools like <code>aws s3</code> commands</li>
+</ol>
 <hr>
 </section>
 <section id="error-object-is-in-glacier-storage-class-or-download-fails-for-large-files" class="level3">
@@ -479,16 +450,14 @@ Temporary copy auto-deletes after 24 hours</code></pre>
 </section>
 <section id="key-points-to-remember" class="level2">
 <h2 class="anchored" data-anchor-id="key-points-to-remember">Key Points to Remember</h2>
-<div class="callout callout-style-simple callout-none no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>✓ <strong>No individual AWS accounts:</strong> Everyone uses Globus with the shared S3 connector—simpler and more secure. ✓ <strong>UVA login is your key:</strong> Your virginia.edu credentials authenticate you to Globus and authorize S3 access. ✓ <strong>No downloads needed:</strong> Globus is web-based. You don’t need to install anything (unless you use Globus CLI). ✓ <strong>Permissions take time:</strong> If you’re newly added to a collection, it may take 5-10 minutes for access to activate. ✓ <strong>AWS SA credentials available:</strong> Rivanna users can find credentials at <code>/project/dremel_lab/scripts/aws_globus_sa_credentials.txt</code>. Non-Rivanna users can email Sarah Dremel. ✓ <strong>Ask in Slack if stuck:</strong> The <code>#dremellab</code> channel is your fastest way to get help from the team.</p>
-</div>
-</div>
-</div>
+<blockquote class="blockquote">
+<p>✓ <strong>No individual AWS accounts:</strong> Everyone uses Globus with the shared S3 connector—simpler and more secure.<br>
+✓ <strong>UVA login is your key:</strong> Your virginia.edu credentials authenticate you to Globus and authorize S3 access.<br>
+✓ <strong>No downloads needed:</strong> Globus is web-based. You don’t need to install anything (unless you use Globus CLI).<br>
+✓ <strong>Permissions take time:</strong> If you’re newly added to a collection, it may take 5-10 minutes for access to activate.<br>
+✓ <strong>AWS SA credentials available:</strong> Rivanna users can find credentials at <code>/project/dremel_lab/scripts/aws_globus_sa_credentials.txt</code>. Non-Rivanna users can email the lab PI.<br>
+✓ <strong>Ask in Slack if stuck:</strong> The <code>#dremellab</code> channel is your fastest way to get help from the team.</p>
+</blockquote>
 <hr>
 </section>
 <section id="need-help" class="level2">
@@ -499,7 +468,9 @@ Temporary copy auto-deletes after 24 hours</code></pre>
 <li><strong>UVA Research Computing:</strong> https://www.rc.virginia.edu/support/</li>
 </ul>
 <hr>
-<p><strong>Last updated:</strong> May 2026 <strong>Maintained by:</strong> Dremel Lab</p>
+<p><strong>Last updated:</strong> May 2026<br>
+<strong>Maintained by:</strong> Dremel Lab</p>
+</section>
 </section>
 
 </main>
@@ -555,13 +526,14 @@ Temporary copy auto-deletes after 24 hours</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

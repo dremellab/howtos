@@ -1,0 +1,51 @@
+name: Publish Guides
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'guides/**/*.md'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Convert markdown to QMD
+        run: |
+          for md_file in guides/**/*.md; do
+            dir=$(dirname "$md_file")
+            name=$(basename "$md_file" .md)
+            qmd_file="$dir/${name}.qmd"
+
+            if [ -f "$qmd_file" ]; then
+              python3 scripts/md-to-qmd.py "$md_file" "$qmd_file"
+            fi
+          done
+
+      - name: Render to HTML
+        run: |
+          quarto render guides/**/*.qmd --to html
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add guides/**/*.qmd guides/**/*.html
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto: Update guides from markdown and render to HTML"
+            git push
+          fi

@@ -10,6 +10,12 @@ A step-by-step guide for Dremel Lab members to set up Globus access to the lab's
 **Time to complete:** 5-10 minutes  
 **Prerequisites:** Active virginia.edu account
 
+### [Rivanna Storage Options](guides/rivanna-storage-options/rivanna_storage_guide.md)
+A reference for the storage locations available on Rivanna (`/home`, `/scratch`, `/project`, `/standard`), when to use each, measured I/O performance differences, and the scripts used for scratch cleanup and storage usage reporting.
+
+**Time to complete:** 5-10 minutes  
+**Prerequisites:** Active Rivanna account, Dremel Lab group access
+
 ---
 
 ## Guide Directory Structure
@@ -35,5 +41,6 @@ To add a new how-to guide:
    - `topic_name.qmd` (Quarto document with metadata)
    - `images/` subdirectory for screenshots
 3. Follow the structure: Overview → Prerequisites → Step-by-Step → Troubleshooting → Key Points
-4. Render with Quarto: `quarto render guides/topic-name/topic_name.qmd`
-5. Update this README with a link to the new guide
+4. Add a `.guide-nav` entry for the new guide to every other guide's `.qmd` (`include-before-body`), and add the other guides' links to the new guide's own `.guide-nav` — this is the cross-guide nav bar shown at the top of each published page, and it must be added by hand to each `.qmd`'s frontmatter (not the `.md`) since it isn't rendered from `index.html`
+5. Render with Quarto: `quarto render guides/topic-name/topic_name.qmd`
+6. Update this README and `index.html` with a link to the new guide

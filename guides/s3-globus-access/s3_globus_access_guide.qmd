@@ -57,9 +57,37 @@ format:
           color: #555;
           margin-top: 2px;
         }
+        .guide-nav {
+          margin-bottom: 20px;
+          padding-bottom: 12px;
+          border-bottom: 1px solid #e0e0e0;
+          font-size: 0.9em;
+        }
+        .guide-nav a {
+          color: #0066cc;
+          text-decoration: none;
+        }
+        .guide-nav a:hover {
+          text-decoration: underline;
+        }
+        .guide-nav-current {
+          font-weight: 600;
+          color: #333;
+        }
+        .guide-nav-sep {
+          color: #aaa;
+          margin: 0 8px;
+        }
         </style>
     include-before-body:
       text: |
+        <nav class="guide-nav">
+          <a href="../../index.html">← All Guides</a>
+          <span class="guide-nav-sep">·</span>
+          <span class="guide-nav-current">Getting Access to Dremel Lab S3 Files via Globus</span>
+          <span class="guide-nav-sep">·</span>
+          <a href="../rivanna-storage-options/rivanna_storage_guide.html">Rivanna Storage Options</a>
+        </nav>
         <div class="date-info">
           <div>
             <span class="date-label">📅 Published</span>
@@ -239,51 +267,42 @@ Pipeline outputs in the `_HTS/<PIPELINE>` folder are stored in two different S3 
 - These files can be downloaded directly through Globus without any delays
 - Examples: QC reports, log files, configuration files, small count matrices
 
-**Glacier** — *Requires Restoration*
+**Glacier (Flexible Retrieval)** — *Restored automatically, takes a few hours*
 
 - Large files (e.g., BAM files, raw sequencing reads, large matrices)
-- **Cannot be downloaded directly via Globus**—attempting to download will result in an error
-- These files must be restored to temporary Glacier IR objects before downloading
+- Cannot be read instantly, but **no manual restore request is needed anymore** — Globus restores archived Glacier objects automatically as part of the transfer.
+
+> ✅ **Resolved (2026-08-31):** Glacier restore support (`--s3-restore`) is enabled on the Dremel Lab S3 Globus collection (`dremel-lab-bucket`). Previously this required emailing Sarah Dremel to manually restore each Glacier object; that manual step is **no longer necessary**. See [HPC ticket RIV-20794](https://www.rc.virginia.edu/support/) — "Enable Glacier restore support on the Dremel Lab S3 Globus collection" — closed by Research Computing after a successful real-world test.
 
 ### How to Download Glacier Files
 
-If you try to download a large file and receive an error indicating it's in Glacier storage:
+Just start the download/transfer in Globus as normal — no email or manual request required:
 
-1. **Note the file path and name** from the error message
-2. **Email Sarah Dremel** at qdt2nz@virginia.edu with:
-   - The file path (e.g., `_HTS/sample-set-name/alignment/file.bam`)
-   - Your name and project/sample set
-   - Expected download time needed
-
-3. **File restoration process** (handled by Sarah):
-   - The file is temporarily copied to a Glacier IR object
-   - You'll receive a download link or notification
-   - **Download window: 24 hours** from when restoration is complete
-   - After 24 hours, the temporary copy is automatically deleted
-
-4. **Download during the 24-hour window** via Globus or direct link
+1. **Select the Glacier file** and start the download/transfer in Globus as you would any other file
+2. **Globus detects the object is archived** and automatically submits an AWS restore request on your behalf
+3. **Wait for the restore to complete** — configured for **Standard tier**, typically **3-5 hours**
+4. **Globus finishes the transfer automatically** once the object is restored — you don't need to retry or come back to re-trigger anything
+5. The restored copy stays available for **5-7 days** (`restore_days`), so it's fine if a large multi-file transfer takes a while to work through the queue
 
 ### Example Scenario
 
 ```
-You try to download: _HTS/my-sample-set/alignment/sample1.sorted.bam
+You start downloading: _HTS/my-sample-set/alignment/sample1.sorted.bam
 ↓
-Error: "Object is in Glacier storage class and cannot be accessed"
+Globus detects the object is archived in Glacier
 ↓
-Email: qdt2nz@virginia.edu with the file path
+Globus automatically submits the AWS restore request (Standard tier, ~3-5 hours)
 ↓
-File is restored to temporary Glacier IR copy
+Globus waits, then completes the transfer automatically
 ↓
-Download within 24 hours
-↓
-Temporary copy auto-deletes after 24 hours
+Restored copy remains available for 5-7 days if you need it again
 ```
 
 ### Important Notes
 
-> ⚠️ **Plan ahead:** File restoration takes a few hours, so request downloads when you know you'll need them soon.  
-> ⚠️ **24-hour window:** Make sure to download during the restoration window—the file is only accessible for 24 hours.  
-> ⚠️ **Contact early:** If you need multiple large files, email in advance so she can batch-restore them.
+> ⚠️ **Plan ahead:** Restoration still takes a few hours (Standard tier, ~3-5 hours), so a Glacier download won't complete instantly — kick off large/Glacier transfers before you need the files.
+> ⚠️ **Large or multi-file transfers:** Restored copies stay available for 5-7 days, which gives Globus enough time to work through big batches without files expiring mid-transfer.
+> ℹ️ **If a Glacier transfer still fails:** This used to require emailing Sarah Dremel for a manual restore. Since the fix above, a failure more likely means a permissions or connector issue — report it in `#dremellab` or to Research Computing rather than requesting a manual restore.
 
 ---
 
@@ -341,21 +360,19 @@ Email the lab PI (qdt2nz@virginia.edu (Sarah Dremel)) for help getting UVA accou
 
 ---
 
-### "Error: Object is in Glacier storage class" or download fails for large files
+### Download of a large file is slow to start or shows "restoring"
 
-**Cause:** Large files in the `_HTS/` folder are stored in Glacier storage, which is not directly accessible via Globus.
+**Cause:** Large files in the `_HTS/` folder are stored in Glacier (Flexible Retrieval). As of 2026-08-31, Globus automatically restores these on transfer — no manual request needed — but the restore itself still takes time.
 
 **Fix:**
 
-1. Note the file path that failed to download
-2. Email Sarah Dremel (qdt2nz@virginia.edu) with:
-   - The file path (e.g., `_HTS/sample-set-name/alignment/file.bam`)
-   - Your name and project
-   - When you need to download it
-3. Sarah will restore the file to a temporary Glacier IR copy
-4. Download the file within the **24-hour window** (see **Understanding S3 Storage Classes & File Restoration** section for details)
+1. Just start the transfer in Globus as normal
+2. Globus automatically submits the restore request and waits; expect roughly **3-5 hours** (Standard tier) before the transfer completes
+3. No action needed on your part — do not email for a manual restore, this is now automatic
 
-**Tip:** If you need multiple large files, ask Sarah to batch-restore them to minimize the number of requests.
+**Tip:** If you need multiple large files, start them all as one transfer — the restored copies stay available for 5-7 days, so Globus has plenty of time to work through the queue.
+
+**If the transfer errors out instead of restoring:** This is no longer expected behavior. Report it in `#dremellab` or contact Research Computing — it likely indicates a permissions or connector issue, not something a manual Glacier restore would fix.
 
 ---
 
@@ -365,7 +382,8 @@ Email the lab PI (qdt2nz@virginia.edu (Sarah Dremel)) for help getting UVA accou
 > ✓ **UVA login is your key:** Your virginia.edu credentials authenticate you to Globus and authorize S3 access.  
 > ✓ **No downloads needed:** Globus is web-based. You don't need to install anything (unless you use Globus CLI).  
 > ✓ **Permissions take time:** If you're newly added to a collection, it may take 5-10 minutes for access to activate.  
-> ✓ **AWS SA credentials available:** Rivanna users can find credentials at `/project/dremel_lab/scripts/aws_globus_sa_credentials.txt`. Non-Rivanna users can email the lab PI.  
+> ✓ **AWS SA credentials available:** Rivanna users can find credentials at `/project/dremel_lab/scripts/aws_globus_sa_credentials.txt`. Non-Rivanna users can email the lab PI.
+> ✓ **Glacier restore is automatic:** As of 2026-08-31, Globus automatically restores Glacier-archived files during transfer (~3-5 hours, available 5-7 days) — no manual email request needed.
 > ✓ **Ask in Slack if stuck:** The `#dremellab` channel is your fastest way to get help from the team.
 
 ---
@@ -378,5 +396,5 @@ Email the lab PI (qdt2nz@virginia.edu (Sarah Dremel)) for help getting UVA accou
 
 ---
 
-**Last updated:** May 2026  
+**Last updated:** September 2026
 **Maintained by:** Dremel Lab

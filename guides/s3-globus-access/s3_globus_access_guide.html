@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.7.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,9 +11,6 @@
 
 <title>Getting Access to Dremel Lab S3 Files via Globus</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -35,10 +32,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="s3_globus_access_guide_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="s3_globus_access_guide_files/libs/quarto-html/anchor.min.js"></script>
 <link href="s3_globus_access_guide_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="s3_globus_access_guide_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="s3_globus_access_guide_files/libs/quarto-html/quarto-syntax-highlighting-226bd0f977fa82dfae4534cac220d79a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="s3_globus_access_guide_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="s3_globus_access_guide_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="s3_globus_access_guide_files/libs/bootstrap/bootstrap-e7e7ff7738cbac26df6357f5726392ca.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="s3_globus_access_guide_files/libs/bootstrap/bootstrap-a563fdec54d0970a76634735bffa3990.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <style>
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -81,6 +78,27 @@ code {
   color: #555;
   margin-top: 2px;
 }
+.guide-nav {
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 0.9em;
+}
+.guide-nav a {
+  color: #0066cc;
+  text-decoration: none;
+}
+.guide-nav a:hover {
+  text-decoration: underline;
+}
+.guide-nav-current {
+  font-weight: 600;
+  color: #333;
+}
+.guide-nav-sep {
+  color: #aaa;
+  margin: 0 8px;
+}
 </style>
 
 
@@ -109,6 +127,13 @@ code {
 </nav>
 </div>
 <main class="content" id="quarto-document-content">
+<nav class="guide-nav">
+  <a href="../../index.html">← All Guides</a>
+  <span class="guide-nav-sep">·</span>
+  <span class="guide-nav-current">Getting Access to Dremel Lab S3 Files via Globus</span>
+  <span class="guide-nav-sep">·</span>
+  <a href="../rivanna-storage-options/rivanna_storage_guide.html">Rivanna Storage Options</a>
+</nav>
 <div class="date-info">
   <div>
     <span class="date-label">📅 Published</span>
@@ -331,54 +356,42 @@ code {
 <li>These files can be downloaded directly through Globus without any delays</li>
 <li>Examples: QC reports, log files, configuration files, small count matrices</li>
 </ul>
-<p><strong>Glacier</strong> — <em>Requires Restoration</em></p>
+<p><strong>Glacier (Flexible Retrieval)</strong> — <em>Restored automatically, takes a few hours</em></p>
 <ul>
 <li>Large files (e.g., BAM files, raw sequencing reads, large matrices)</li>
-<li><strong>Cannot be downloaded directly via Globus</strong>—attempting to download will result in an error</li>
-<li>These files must be restored to temporary Glacier IR objects before downloading</li>
+<li>Cannot be read instantly, but <strong>no manual restore request is needed anymore</strong> — Globus restores archived Glacier objects automatically as part of the transfer.</li>
 </ul>
+<blockquote class="blockquote">
+<p>✅ <strong>Resolved (2026-08-31):</strong> Glacier restore support (<code>--s3-restore</code>) is enabled on the Dremel Lab S3 Globus collection (<code>dremel-lab-bucket</code>). Previously this required emailing Sarah Dremel to manually restore each Glacier object; that manual step is <strong>no longer necessary</strong>. See <a href="https://www.rc.virginia.edu/support/">HPC ticket RIV-20794</a> — “Enable Glacier restore support on the Dremel Lab S3 Globus collection” — closed by Research Computing after a successful real-world test.</p>
+</blockquote>
 </section>
 <section id="how-to-download-glacier-files" class="level3">
 <h3 class="anchored" data-anchor-id="how-to-download-glacier-files">How to Download Glacier Files</h3>
-<p>If you try to download a large file and receive an error indicating it’s in Glacier storage:</p>
+<p>Just start the download/transfer in Globus as normal — no email or manual request required:</p>
 <ol type="1">
-<li><strong>Note the file path and name</strong> from the error message</li>
-<li><strong>Email Sarah Dremel</strong> at qdt2nz@virginia.edu with:
-<ul>
-<li>The file path (e.g., <code>_HTS/sample-set-name/alignment/file.bam</code>)</li>
-<li>Your name and project/sample set</li>
-<li>Expected download time needed</li>
-</ul></li>
-<li><strong>File restoration process</strong> (handled by Sarah):
-<ul>
-<li>The file is temporarily copied to a Glacier IR object</li>
-<li>You’ll receive a download link or notification</li>
-<li><strong>Download window: 24 hours</strong> from when restoration is complete</li>
-<li>After 24 hours, the temporary copy is automatically deleted</li>
-</ul></li>
-<li><strong>Download during the 24-hour window</strong> via Globus or direct link</li>
+<li><strong>Select the Glacier file</strong> and start the download/transfer in Globus as you would any other file</li>
+<li><strong>Globus detects the object is archived</strong> and automatically submits an AWS restore request on your behalf</li>
+<li><strong>Wait for the restore to complete</strong> — configured for <strong>Standard tier</strong>, typically <strong>3-5 hours</strong></li>
+<li><strong>Globus finishes the transfer automatically</strong> once the object is restored — you don’t need to retry or come back to re-trigger anything</li>
+<li>The restored copy stays available for <strong>5-7 days</strong> (<code>restore_days</code>), so it’s fine if a large multi-file transfer takes a while to work through the queue</li>
 </ol>
 </section>
 <section id="example-scenario" class="level3">
 <h3 class="anchored" data-anchor-id="example-scenario">Example Scenario</h3>
-<pre><code>You try to download: _HTS/my-sample-set/alignment/sample1.sorted.bam
+<pre><code>You start downloading: _HTS/my-sample-set/alignment/sample1.sorted.bam
 ↓
-Error: "Object is in Glacier storage class and cannot be accessed"
+Globus detects the object is archived in Glacier
 ↓
-Email: qdt2nz@virginia.edu with the file path
+Globus automatically submits the AWS restore request (Standard tier, ~3-5 hours)
 ↓
-File is restored to temporary Glacier IR copy
+Globus waits, then completes the transfer automatically
 ↓
-Download within 24 hours
-↓
-Temporary copy auto-deletes after 24 hours</code></pre>
+Restored copy remains available for 5-7 days if you need it again</code></pre>
 </section>
 <section id="important-notes" class="level3">
 <h3 class="anchored" data-anchor-id="important-notes">Important Notes</h3>
 <blockquote class="blockquote">
-<p>⚠️ <strong>Plan ahead:</strong> File restoration takes a few hours, so request downloads when you know you’ll need them soon.<br>
-⚠️ <strong>24-hour window:</strong> Make sure to download during the restoration window—the file is only accessible for 24 hours.<br>
-⚠️ <strong>Contact early:</strong> If you need multiple large files, email in advance so she can batch-restore them.</p>
+<p>⚠️ <strong>Plan ahead:</strong> Restoration still takes a few hours (Standard tier, ~3-5 hours), so a Glacier download won’t complete instantly — kick off large/Glacier transfers before you need the files. ⚠️ <strong>Large or multi-file transfers:</strong> Restored copies stay available for 5-7 days, which gives Globus enough time to work through big batches without files expiring mid-transfer. ℹ️ <strong>If a Glacier transfer still fails:</strong> This used to require emailing Sarah Dremel for a manual restore. Since the fix above, a failure more likely means a permissions or connector issue — report it in <code>#dremellab</code> or to Research Computing rather than requesting a manual restore.</p>
 </blockquote>
 <hr>
 </section>
@@ -432,22 +445,17 @@ Temporary copy auto-deletes after 24 hours</code></pre>
 </ol>
 <hr>
 </section>
-<section id="error-object-is-in-glacier-storage-class-or-download-fails-for-large-files" class="level3">
-<h3 class="anchored" data-anchor-id="error-object-is-in-glacier-storage-class-or-download-fails-for-large-files">“Error: Object is in Glacier storage class” or download fails for large files</h3>
-<p><strong>Cause:</strong> Large files in the <code>_HTS/</code> folder are stored in Glacier storage, which is not directly accessible via Globus.</p>
+<section id="download-of-a-large-file-is-slow-to-start-or-shows-restoring" class="level3">
+<h3 class="anchored" data-anchor-id="download-of-a-large-file-is-slow-to-start-or-shows-restoring">Download of a large file is slow to start or shows “restoring”</h3>
+<p><strong>Cause:</strong> Large files in the <code>_HTS/</code> folder are stored in Glacier (Flexible Retrieval). As of 2026-08-31, Globus automatically restores these on transfer — no manual request needed — but the restore itself still takes time.</p>
 <p><strong>Fix:</strong></p>
 <ol type="1">
-<li>Note the file path that failed to download</li>
-<li>Email Sarah Dremel (qdt2nz@virginia.edu) with:
-<ul>
-<li>The file path (e.g., <code>_HTS/sample-set-name/alignment/file.bam</code>)</li>
-<li>Your name and project</li>
-<li>When you need to download it</li>
-</ul></li>
-<li>Sarah will restore the file to a temporary Glacier IR copy</li>
-<li>Download the file within the <strong>24-hour window</strong> (see <strong>Understanding S3 Storage Classes &amp; File Restoration</strong> section for details)</li>
+<li>Just start the transfer in Globus as normal</li>
+<li>Globus automatically submits the restore request and waits; expect roughly <strong>3-5 hours</strong> (Standard tier) before the transfer completes</li>
+<li>No action needed on your part — do not email for a manual restore, this is now automatic</li>
 </ol>
-<p><strong>Tip:</strong> If you need multiple large files, ask Sarah to batch-restore them to minimize the number of requests.</p>
+<p><strong>Tip:</strong> If you need multiple large files, start them all as one transfer — the restored copies stay available for 5-7 days, so Globus has plenty of time to work through the queue.</p>
+<p><strong>If the transfer errors out instead of restoring:</strong> This is no longer expected behavior. Report it in <code>#dremellab</code> or contact Research Computing — it likely indicates a permissions or connector issue, not something a manual Glacier restore would fix.</p>
 <hr>
 </section>
 </section>
@@ -458,8 +466,7 @@ Temporary copy auto-deletes after 24 hours</code></pre>
 ✓ <strong>UVA login is your key:</strong> Your virginia.edu credentials authenticate you to Globus and authorize S3 access.<br>
 ✓ <strong>No downloads needed:</strong> Globus is web-based. You don’t need to install anything (unless you use Globus CLI).<br>
 ✓ <strong>Permissions take time:</strong> If you’re newly added to a collection, it may take 5-10 minutes for access to activate.<br>
-✓ <strong>AWS SA credentials available:</strong> Rivanna users can find credentials at <code>/project/dremel_lab/scripts/aws_globus_sa_credentials.txt</code>. Non-Rivanna users can email the lab PI.<br>
-✓ <strong>Ask in Slack if stuck:</strong> The <code>#dremellab</code> channel is your fastest way to get help from the team.</p>
+✓ <strong>AWS SA credentials available:</strong> Rivanna users can find credentials at <code>/project/dremel_lab/scripts/aws_globus_sa_credentials.txt</code>. Non-Rivanna users can email the lab PI. ✓ <strong>Glacier restore is automatic:</strong> As of 2026-08-31, Globus automatically restores Glacier-archived files during transfer (~3-5 hours, available 5-7 days) — no manual email request needed. ✓ <strong>Ask in Slack if stuck:</strong> The <code>#dremellab</code> channel is your fastest way to get help from the team.</p>
 </blockquote>
 <hr>
 </section>
@@ -471,8 +478,7 @@ Temporary copy auto-deletes after 24 hours</code></pre>
 <li><strong>UVA Research Computing:</strong> https://www.rc.virginia.edu/support/</li>
 </ul>
 <hr>
-<p><strong>Last updated:</strong> May 2026<br>
-<strong>Maintained by:</strong> Dremel Lab</p>
+<p><strong>Last updated:</strong> September 2026 <strong>Maintained by:</strong> Dremel Lab</p>
 </section>
 </section>
 
@@ -529,14 +535,13 @@ Temporary copy auto-deletes after 24 hours</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

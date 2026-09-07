@@ -14,8 +14,8 @@ Rivanna exposes several distinct storage locations, each with different quotas, 
 | ----------------- | ------------ | --------- | ------------- | ----------------------------------- | --------------------------- |
 | `/home`            | 200 GB       | No        | Daily, 1 week | No                                  | Code, scripts, documents    |
 | `/scratch`         | 10 TB        | No        | None          | Files inactive for 90 days deleted  | Active HPC computations     |
-| `/project`         | 1 TB+ leased | Yes       | Daily, 1 week | No                                  | Shared HPC project data     |
-| `/standard`        | 1 TB+ leased | Yes       | None          | No                                  | Long term research storage  |
+| `/project`         | 10 TB leased | Yes       | Daily, 1 week | No                                  | Shared HPC project data     |
+| `/standard`        | 10 TB leased | Yes       | None          | No                                  | Long term research storage  |
 
 Dremel Lab's shared paths follow this pattern:
 - `/project/dremel_lab` — shared, fast, holds pipeline code, reference genomes/indices, and shared tooling (e.g. `/project/dremel_lab/scripts`) — not per-run pipeline I/O, which goes on `/scratch`

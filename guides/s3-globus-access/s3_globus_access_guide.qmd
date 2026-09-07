@@ -91,11 +91,11 @@ format:
         <div class="date-info">
           <div>
             <span class="date-label">📅 Published</span>
-            <span class="date-value">September 07, 2026</span>
+            <span class="date-value">July 20, 2026</span>
           </div>
           <div>
             <span class="date-label">✏️ Last Edited</span>
-            <span class="date-value">July 20, 2026</span>
+            <span class="date-value">September 07, 2026</span>
           </div>
         </div>
 ---

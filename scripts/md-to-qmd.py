@@ -31,9 +31,10 @@ def convert_md_to_qmd(md_path: str, qmd_path: str) -> None:
     today = date.today().strftime("%B %d, %Y")
     frontmatter = re.sub(r"date: [^\n]+", f"date: {today}", frontmatter)
 
-    # Update date in include-before-body HTML
+    # Update only the "Last Edited" date in include-before-body HTML;
+    # the "Published" date-value must never change after initial creation.
     frontmatter = re.sub(
-        r"(<span class=\"date-value\">)[^<]+(</span>\s+</div>\s+<div>)",
+        r"(Last Edited</span>\s*<span class=\"date-value\">)[^<]+(</span>)",
         rf"\1{today}\2",
         frontmatter,
     )

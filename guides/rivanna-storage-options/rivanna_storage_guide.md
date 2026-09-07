@@ -50,7 +50,7 @@ Given the quota/sharing/performance tradeoffs above, Dremel Lab pipelines (HAROL
 
 ## I/O Performance: `/standard` vs `/project`
 
-We benchmarked `/standard` against `/project` (and `$HOME` as a baseline) after noticing pipelines and even `conda env list` hanging when reading/writing under `/standard`. Full write-up: [seqinfomics_eln#41 — Slowness in loading conda env](https://github.com/dremellab/seqinfomics_eln/issues/41).
+This started as a `conda env list` command hanging for minutes on end. The suspects were slow I/O, or a conda environment that had grown too large/old for `conda` to index quickly — the fix that actually cleared up the hang was switching the login shell from `zsh` to `bash`. But while chasing it down, we benchmarked raw filesystem throughput on `/standard` vs `/project` (and `$HOME` as a baseline) directly with `dd`, and the results were dramatic enough to document independently of the original conda issue.
 
 Test: `dd` with `bs=1G count=1` and `oflag=direct`/`iflag=direct` (bypasses page cache, so this reflects real filesystem throughput).
 

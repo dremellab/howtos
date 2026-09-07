@@ -312,7 +312,7 @@ code {
 </section>
 <section id="io-performance-standard-vs-project" class="level2">
 <h2 class="anchored" data-anchor-id="io-performance-standard-vs-project">I/O Performance: <code>/standard</code> vs <code>/project</code></h2>
-<p>We benchmarked <code>/standard</code> against <code>/project</code> (and <code>$HOME</code> as a baseline) after noticing pipelines and even <code>conda env list</code> hanging when reading/writing under <code>/standard</code>. Full write-up: <a href="https://github.com/dremellab/seqinfomics_eln/issues/41">seqinfomics_eln#41 — Slowness in loading conda env</a>.</p>
+<p>This started as a <code>conda env list</code> command hanging for minutes on end. The suspects were slow I/O, or a conda environment that had grown too large/old for <code>conda</code> to index quickly — the fix that actually cleared up the hang was switching the login shell from <code>zsh</code> to <code>bash</code>. But while chasing it down, we benchmarked raw filesystem throughput on <code>/standard</code> vs <code>/project</code> (and <code>$HOME</code> as a baseline) directly with <code>dd</code>, and the results were dramatic enough to document independently of the original conda issue.</p>
 <p>Test: <code>dd</code> with <code>bs=1G count=1</code> and <code>oflag=direct</code>/<code>iflag=direct</code> (bypasses page cache, so this reflects real filesystem throughput).</p>
 <table class="caption-top table">
 <thead>

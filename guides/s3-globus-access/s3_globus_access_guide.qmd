@@ -272,7 +272,7 @@ Pipeline outputs in the `_HTS/<PIPELINE>` folder are stored in two different S3 
 - Large files (e.g., BAM files, raw sequencing reads, large matrices)
 - Cannot be read instantly, but **no manual restore request is needed anymore** — Globus restores archived Glacier objects automatically as part of the transfer.
 
-> ✅ **Resolved (2026-08-31):** Glacier restore support (`--s3-restore`) is enabled on the Dremel Lab S3 Globus collection (`dremel-lab-bucket`). Previously this required emailing Sarah Dremel to manually restore each Glacier object; that manual step is **no longer necessary**. See [HPC ticket RIV-20794](https://www.rc.virginia.edu/support/) — "Enable Glacier restore support on the Dremel Lab S3 Globus collection" — closed by Research Computing after a successful real-world test.
+> ✅ **Resolved (2026-08-31), HPC ticket RIV-20794:** Before this fix, Globus transfers of any object archived in Glacier Flexible Retrieval simply failed — the object had to be restored first, and restores were handled by hand. We asked Research Computing to enable Globus's built-in `--s3-restore` support on the `dremel-lab-bucket` storage gateway instead, configured with `restore_tier = Standard` (~3-5 hour retrieval) and `restore_days = 5-7` (so a restored copy stays available long enough for large or multi-file transfers), after confirming the AWS credentials behind the collection had the `s3:RestoreObject` IAM permission. RC (Michele Co) enabled it on the gateway config (`S3 Restore Archived Objects: True`); our real-world test transfer completed successfully, and the ticket was closed. Manually emailing Sarah Dremel to restore a Glacier object is **no longer necessary**.
 
 ### How to Download Glacier Files
 

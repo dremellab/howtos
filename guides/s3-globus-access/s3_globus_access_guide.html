@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.7.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,16 +11,10 @@
 
 <title>Getting Access to Dremel Lab S3 Files via Globus</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -38,10 +32,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="s3_globus_access_guide_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="s3_globus_access_guide_files/libs/quarto-html/anchor.min.js"></script>
 <link href="s3_globus_access_guide_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="s3_globus_access_guide_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="s3_globus_access_guide_files/libs/quarto-html/quarto-syntax-highlighting-226bd0f977fa82dfae4534cac220d79a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="s3_globus_access_guide_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="s3_globus_access_guide_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="s3_globus_access_guide_files/libs/bootstrap/bootstrap-a334795483ace50443b87ff471c1f68b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="s3_globus_access_guide_files/libs/bootstrap/bootstrap-a563fdec54d0970a76634735bffa3990.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <style>
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -368,7 +362,7 @@ code {
 <li>Cannot be read instantly, but <strong>no manual restore request is needed anymore</strong> — Globus restores archived Glacier objects automatically as part of the transfer.</li>
 </ul>
 <blockquote class="blockquote">
-<p>✅ <strong>Resolved (2026-08-31):</strong> Glacier restore support (<code>--s3-restore</code>) is enabled on the Dremel Lab S3 Globus collection (<code>dremel-lab-bucket</code>). Previously this required emailing Sarah Dremel to manually restore each Glacier object; that manual step is <strong>no longer necessary</strong>. See <a href="https://www.rc.virginia.edu/support/">HPC ticket RIV-20794</a> — “Enable Glacier restore support on the Dremel Lab S3 Globus collection” — closed by Research Computing after a successful real-world test.</p>
+<p>✅ <strong>Resolved (2026-08-31), HPC ticket RIV-20794:</strong> Before this fix, Globus transfers of any object archived in Glacier Flexible Retrieval simply failed — the object had to be restored first, and restores were handled by hand. We asked Research Computing to enable Globus’s built-in <code>--s3-restore</code> support on the <code>dremel-lab-bucket</code> storage gateway instead, configured with <code>restore_tier = Standard</code> (~3-5 hour retrieval) and <code>restore_days = 5-7</code> (so a restored copy stays available long enough for large or multi-file transfers), after confirming the AWS credentials behind the collection had the <code>s3:RestoreObject</code> IAM permission. RC (Michele Co) enabled it on the gateway config (<code>S3 Restore Archived Objects: True</code>); our real-world test transfer completed successfully, and the ticket was closed. Manually emailing Sarah Dremel to restore a Glacier object is <strong>no longer necessary</strong>.</p>
 </blockquote>
 </section>
 <section id="how-to-download-glacier-files" class="level3">
@@ -544,14 +538,13 @@ Restored copy remains available for 5-7 days if you need it again</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

@@ -162,6 +162,7 @@ code {
   <li><a href="#scratch-cleanup" id="toc-scratch-cleanup" class="nav-link" data-scroll-target="#scratch-cleanup">Scratch Cleanup</a></li>
   <li><a href="#storage-usage-reporting" id="toc-storage-usage-reporting" class="nav-link" data-scroll-target="#storage-usage-reporting">Storage Usage Reporting</a></li>
   <li><a href="#finding-whats-eating-your-space-with-dust" id="toc-finding-whats-eating-your-space-with-dust" class="nav-link" data-scroll-target="#finding-whats-eating-your-space-with-dust">Finding What’s Eating Your Space with <code>dust</code></a></li>
+  <li><a href="#getting-hpc-specific-help-from-research-computing" id="toc-getting-hpc-specific-help-from-research-computing" class="nav-link" data-scroll-target="#getting-hpc-specific-help-from-research-computing">Getting HPC-Specific Help from Research Computing</a></li>
   <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points">Key Points</a></li>
   </ul></li>
   </ul>
@@ -419,6 +420,25 @@ code {
 <li>Once you know what’s safe to remove — old pipeline temp dirs, leftover <code>.snakemake</code> work directories, duplicate FASTQs, stray core dumps — clean it up yourself, or let <a href="#scratch-cleanup"><code>cleanup_uuid_dir</code></a> handle the UUID-temp-dir case automatically.</li>
 </ol>
 </section>
+<section id="getting-hpc-specific-help-from-research-computing" class="level2">
+<h2 class="anchored" data-anchor-id="getting-hpc-specific-help-from-research-computing">Getting HPC-Specific Help from Research Computing</h2>
+<p>Not every storage problem is something Dremel Lab’s scripts or the lab PI can fix. Filesystem outages, quota increases, mount/permission errors, and Rivanna-wide performance issues are owned by <strong>UVA Research Computing (RC)</strong>, not the lab — for those, go straight to RC support rather than <code>#dremellab</code>.</p>
+<p><strong>Before filing a ticket:</strong> check the <a href="https://www.rc.virginia.edu/system-status">System Status page</a> — your issue might already be a known, in-progress incident.</p>
+<p><strong>How to open a ticket:</strong></p>
+<ul>
+<li><strong>Email (preferred by the lab):</strong> hpc-support@virginia.edu — quicker to write, keeps a thread you can reply on, and RC turns it into a ticket automatically. This is Dremel Lab’s default way of reaching RC; use it unless you have a reason to use the form instead.</li>
+<li><strong>Web form:</strong> <a href="https://forms.rc.virginia.edu/form/support-request/">forms.rc.virginia.edu/form/support-request/</a> — set <strong>Support Category</strong> to <strong>HPC</strong> (or <strong>Storage</strong> for a quota/filesystem-specific issue), then fill in “Brief description of your request” and “Details of your request” (the form just says to “provide as much detail as possible” — see below for what that means in practice)</li>
+</ul>
+<p><strong>What to include so it doesn’t bounce back asking for more info:</strong></p>
+<ul>
+<li>Full path of the affected storage location (e.g.&nbsp;<code>/scratch/cud2td</code>, <code>/standard/dremel_lab</code>)</li>
+<li>The exact error message or command output — not a paraphrase</li>
+<li>When it happened (date/time), and whether it’s reproducible</li>
+<li>Group/allocation: <code>dremel_lab</code></li>
+<li>Slurm job ID, if it happened during a job</li>
+</ul>
+<p><strong>Less urgent, non-broken questions:</strong> RC also holds weekly office hours — <a href="https://rc.virginia.edu/events/office-hours-every-tuesday">Tuesdays</a> and <a href="https://rc.virginia.edu/events/office-hours-every-thursday">Thursdays</a> — a good fit for “what’s the right way to do X” questions that aren’t worth a ticket.</p>
+</section>
 <section id="key-points" class="level2">
 <h2 class="anchored" data-anchor-id="key-points">Key Points</h2>
 <ul>
@@ -427,6 +447,7 @@ code {
 <li><code>/scratch</code> auto-purges after 90 days, but <code>cleanup_uuid_dir</code> proactively removes stale pipeline temp dirs after 10 days</li>
 <li><code>storage_usage</code> + <code>storage_usage_report</code> give a daily, per-location usage snapshot — check before a large job to avoid quota surprises</li>
 <li>When a location is full, run <code>dust</code> yourself to drill down and find <em>which folder</em> is the actual culprit</li>
+<li>Filesystem/quota/outage issues go to HPC Support (hpc-support@virginia.edu, our preferred contact method), not <code>#dremellab</code></li>
 </ul>
 </section>
 </section>

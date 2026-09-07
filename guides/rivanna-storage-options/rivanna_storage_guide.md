@@ -153,6 +153,27 @@ dust --depth 2 --only-dir --full-paths --limit-filesystem /scratch/$USER/
 3. See a huge folder? `cd` into it and run `dust` again (or drop `--only-dir` to see individual files) to zoom in on exactly what's inside.
 4. Once you know what's safe to remove — old pipeline temp dirs, leftover `.snakemake` work directories, duplicate FASTQs, stray core dumps — clean it up yourself, or let [`cleanup_uuid_dir`](#scratch-cleanup) handle the UUID-temp-dir case automatically.
 
+## Getting HPC-Specific Help from Research Computing
+
+Not every storage problem is something Dremel Lab's scripts or the lab PI can fix. Filesystem outages, quota increases, mount/permission errors, and Rivanna-wide performance issues are owned by **UVA Research Computing (RC)**, not the lab — for those, go straight to RC support rather than `#dremellab`.
+
+**Before filing a ticket:** check the [System Status page](https://www.rc.virginia.edu/system-status) — your issue might already be a known, in-progress incident.
+
+**How to open a ticket:**
+
+- **Email (preferred by the lab):** hpc-support@virginia.edu — quicker to write, keeps a thread you can reply on, and RC turns it into a ticket automatically. This is Dremel Lab's default way of reaching RC; use it unless you have a reason to use the form instead.
+- **Web form:** [forms.rc.virginia.edu/form/support-request/](https://forms.rc.virginia.edu/form/support-request/) — set **Support Category** to **HPC** (or **Storage** for a quota/filesystem-specific issue), then fill in "Brief description of your request" and "Details of your request" (the form just says to "provide as much detail as possible" — see below for what that means in practice)
+
+**What to include so it doesn't bounce back asking for more info:**
+
+- Full path of the affected storage location (e.g. `/scratch/cud2td`, `/standard/dremel_lab`)
+- The exact error message or command output — not a paraphrase
+- When it happened (date/time), and whether it's reproducible
+- Group/allocation: `dremel_lab`
+- Slurm job ID, if it happened during a job
+
+**Less urgent, non-broken questions:** RC also holds weekly office hours — [Tuesdays](https://rc.virginia.edu/events/office-hours-every-tuesday) and [Thursdays](https://rc.virginia.edu/events/office-hours-every-thursday) — a good fit for "what's the right way to do X" questions that aren't worth a ticket.
+
 ## Key Points
 
 - `/standard` is 15-20x slower than `/project` or `$HOME` for I/O — archival only, never active compute
@@ -160,3 +181,4 @@ dust --depth 2 --only-dir --full-paths --limit-filesystem /scratch/$USER/
 - `/scratch` auto-purges after 90 days, but `cleanup_uuid_dir` proactively removes stale pipeline temp dirs after 10 days
 - `storage_usage` + `storage_usage_report` give a daily, per-location usage snapshot — check before a large job to avoid quota surprises
 - When a location is full, run `dust` yourself to drill down and find *which folder* is the actual culprit
+- Filesystem/quota/outage issues go to HPC Support (hpc-support@virginia.edu, our preferred contact method), not `#dremellab`

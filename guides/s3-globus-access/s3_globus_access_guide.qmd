@@ -2,7 +2,7 @@
 title: Getting Access to Dremel Lab S3 Files via Globus
 subtitle: Step-by-step guide for Dremel Lab members
 author: Dremel Lab
-date: July 20, 2026
+date: September 07, 2026
 format:
   html:
     toc: true
@@ -91,7 +91,7 @@ format:
         <div class="date-info">
           <div>
             <span class="date-label">📅 Published</span>
-            <span class="date-value">July 20, 2026</span>
+            <span class="date-value">September 07, 2026</span>
           </div>
           <div>
             <span class="date-label">✏️ Last Edited</span>
@@ -382,8 +382,8 @@ Email the lab PI (qdt2nz@virginia.edu (Sarah Dremel)) for help getting UVA accou
 > ✓ **UVA login is your key:** Your virginia.edu credentials authenticate you to Globus and authorize S3 access.  
 > ✓ **No downloads needed:** Globus is web-based. You don't need to install anything (unless you use Globus CLI).  
 > ✓ **Permissions take time:** If you're newly added to a collection, it may take 5-10 minutes for access to activate.  
-> ✓ **AWS SA credentials available:** Rivanna users can find credentials at `/project/dremel_lab/scripts/aws_globus_sa_credentials.txt`. Non-Rivanna users can email the lab PI.
-> ✓ **Glacier restore is automatic:** As of 2026-08-31, Globus automatically restores Glacier-archived files during transfer (~3-5 hours, available 5-7 days) — no manual email request needed.
+> ✓ **AWS SA credentials available:** Rivanna users can find credentials at `/project/dremel_lab/scripts/aws_globus_sa_credentials.txt`. Non-Rivanna users can email the lab PI.  
+> ✓ **Glacier restore is automatic:** As of 2026-08-31, Globus automatically restores Glacier-archived files during transfer (~3-5 hours, available 5-7 days) — no manual email request needed.  
 > ✓ **Ask in Slack if stuck:** The `#dremellab` channel is your fastest way to get help from the team.
 
 ---
@@ -396,5 +396,5 @@ Email the lab PI (qdt2nz@virginia.edu (Sarah Dremel)) for help getting UVA accou
 
 ---
 
-**Last updated:** September 2026
+**Last updated:** September 2026  
 **Maintained by:** Dremel Lab

@@ -226,9 +226,39 @@ source /project/dremel_lab/scripts/.sh_common
 
 (see the [scripts repo README](https://github.com/dremellab/scripts/blob/develop/README.md)) — once sourced, you can just run `cleanup_uuid_dir`, `storage_usage`, or `storage_usage_report` from anywhere without the full path.
 
+## Finding What's Eating Your Space with `dust`
+
+`storage_usage` tells you a location is, say, 90% full — but not *which folder inside it* is the actual culprit. For that, use [`dust`](https://github.com/bootandy/dust) (the same tool `storage_usage` runs under the hood) instead of the classic `du -sh *`.
+
+`du` walks every single file one at a time, which on a shared, high-latency filesystem like `/scratch` or `/standard` can take many minutes (or longer) to scan a busy directory — and at the end you still just get a flat, unsorted wall of numbers you have to eyeball to find the big one. `dust` walks the same files but in parallel and stops early once it has enough info to rank folders by size, so it finishes far faster on the same directory — and it hands you the answer already sorted biggest-first with a little bar next to each folder, so the space hog jumps right out at you instead of you having to scroll and compare numbers yourself.
+
+**Location on Rivanna:** `/project/dremel_lab/cargo/bin/dust` (just `dust` on your `$PATH` once you've sourced `.sh_common` — see above)
+
+**Example command:**
+
+```bash
+dust --depth 2 --only-dir --full-paths --limit-filesystem /scratch/$USER/
+```
+
+**What each flag does, in plain terms:**
+
+- **`--depth 2`** — Only look 2 folders deep. Left unlimited, `dust` will crawl every subfolder all the way down, which is slow and buries you in results you don't need yet. Depth 2 gives you a quick "top of the iceberg" view — you can always point it deeper into whichever folder turns out to be the problem.
+- **`--only-dir`** — Only show folders, not individual files. Right now you're hunting for *which directory* is huge, not staring at every file in it — that's the next step, once you've narrowed it down.
+- **`--full-paths`** — Print the entire path (e.g. `/scratch/cud2td/HAROLD_run_2026/tmp`) instead of a shortened name. You'll want to copy that path straight into a `cd` or `rm -rf` — not guess where it actually lives.
+- **`--limit-filesystem`** — Don't wander off onto a different mounted filesystem while scanning. `/scratch`, `/home`, `/project`, and `/standard` are all separate filesystems; without this flag `dust` can follow a symlink or mount point onto a totally different (and much bigger, or much slower) filesystem, which either takes forever or gives you misleading numbers.
+- **`/scratch/$USER/`** — The folder to scan. `$USER` just fills in your own username, so this points at your own scratch directory.
+
+**How to actually use it:**
+
+1. Run the command above.
+2. `dust` prints your biggest subfolders (2 levels deep), each with a bar showing how much space it takes relative to the others.
+3. See a huge folder? `cd` into it and run `dust` again (or drop `--only-dir` to see individual files) to zoom in on exactly what's inside.
+4. Once you know what's safe to remove — old pipeline temp dirs, leftover `.snakemake` work directories, duplicate FASTQs, stray core dumps — clean it up yourself, or let [`cleanup_uuid_dir`](#scratch-cleanup) handle the UUID-temp-dir case automatically.
+
 ## Key Points
 
 - `/standard` is 15-20x slower than `/project` or `$HOME` for I/O — archival only, never active compute
 - `/project` is the workhorse for shared, active pipeline I/O and shared tooling
 - `/scratch` auto-purges after 90 days, but `cleanup_uuid_dir` proactively removes stale pipeline temp dirs after 10 days
 - `storage_usage` + `storage_usage_report` give a daily, per-location usage snapshot — check before a large job to avoid quota surprises
+- When a location is full, run `dust` yourself to drill down and find *which folder* is the actual culprit

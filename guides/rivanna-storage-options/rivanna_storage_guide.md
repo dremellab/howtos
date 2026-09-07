@@ -18,7 +18,7 @@ Rivanna exposes several distinct storage locations, each with different quotas, 
 | `/standard`        | 1 TB+ leased | Yes       | None          | No                                  | Long term research storage  |
 
 Dremel Lab's shared paths follow this pattern:
-- `/project/dremel_lab` — shared, fast, used for active pipeline I/O and shared tooling (e.g. `/project/dremel_lab/scripts`)
+- `/project/dremel_lab` — shared, fast, holds pipeline code, reference genomes/indices, and shared tooling (e.g. `/project/dremel_lab/scripts`) — not per-run pipeline I/O, which goes on `/scratch`
 - `/standard/dremel_lab` — shared, slow, used for long-term archival of raw data and finished results
 - `/scratch/<username>` — per-user scratch for transient pipeline working directories
 
@@ -177,7 +177,7 @@ Not every storage problem is something Dremel Lab's scripts or the lab PI can fi
 ## Key Points
 
 - `/standard` is 15-20x slower than `/project` or `$HOME` for I/O — archival only, never active compute
-- `/project` is the workhorse for shared, active pipeline I/O and shared tooling
+- `/project` holds shared pipeline code, references, and tooling — fast and shared, but per-run pipeline I/O (workdirs, temp files) belongs on `/scratch`, not here
 - `/scratch` auto-purges after 90 days, but `cleanup_uuid_dir` proactively removes stale pipeline temp dirs after 10 days
 - `storage_usage` + `storage_usage_report` give a daily, per-location usage snapshot — check before a large job to avoid quota surprises
 - When a location is full, run `dust` yourself to drill down and find *which folder* is the actual culprit

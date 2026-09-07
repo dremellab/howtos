@@ -285,7 +285,7 @@ code {
 </tr>
 </tbody>
 </table>
-<p>Dremel Lab’s shared paths follow this pattern: - <code>/project/dremel_lab</code> — shared, fast, used for active pipeline I/O and shared tooling (e.g.&nbsp;<code>/project/dremel_lab/scripts</code>) - <code>/standard/dremel_lab</code> — shared, slow, used for long-term archival of raw data and finished results - <code>/scratch/&lt;username&gt;</code> — per-user scratch for transient pipeline working directories</p>
+<p>Dremel Lab’s shared paths follow this pattern: - <code>/project/dremel_lab</code> — shared, fast, holds pipeline code, reference genomes/indices, and shared tooling (e.g.&nbsp;<code>/project/dremel_lab/scripts</code>) — not per-run pipeline I/O, which goes on <code>/scratch</code> - <code>/standard/dremel_lab</code> — shared, slow, used for long-term archival of raw data and finished results - <code>/scratch/&lt;username&gt;</code> — per-user scratch for transient pipeline working directories</p>
 </section>
 <section id="pipeline-data-workflow" class="level2">
 <h2 class="anchored" data-anchor-id="pipeline-data-workflow">Pipeline Data Workflow</h2>
@@ -443,7 +443,7 @@ code {
 <h2 class="anchored" data-anchor-id="key-points">Key Points</h2>
 <ul>
 <li><code>/standard</code> is 15-20x slower than <code>/project</code> or <code>$HOME</code> for I/O — archival only, never active compute</li>
-<li><code>/project</code> is the workhorse for shared, active pipeline I/O and shared tooling</li>
+<li><code>/project</code> holds shared pipeline code, references, and tooling — fast and shared, but per-run pipeline I/O (workdirs, temp files) belongs on <code>/scratch</code>, not here</li>
 <li><code>/scratch</code> auto-purges after 90 days, but <code>cleanup_uuid_dir</code> proactively removes stale pipeline temp dirs after 10 days</li>
 <li><code>storage_usage</code> + <code>storage_usage_report</code> give a daily, per-location usage snapshot — check before a large job to avoid quota surprises</li>
 <li>When a location is full, run <code>dust</code> yourself to drill down and find <em>which folder</em> is the actual culprit</li>

@@ -212,6 +212,24 @@ storage_usage_report                        # today's snapshot, from $HOME/stora
 TARGET_DATE=2026-09-01 storage_usage_report  # a specific date
 ```
 
+**Example output:**
+
+```
+Authorized Use Only!
+Welcome to UVA_HPC
+Storage Usage Snapshot 2026-09-07 01:00:15
++----------+--------------------------+--------------+-------+--------+
+| Location | Path                     | Bytes        | TB    | Source |
++----------+--------------------------+--------------+-------+--------+
+| scratch  | /scratch/cud2td          | 9940442107904| 9.940 | live   |
+| home     | /home/cud2td             |   34784303616| 0.035 | live   |
+| standard | /standard/dremel_lab     | 6180420809216| 6.180 | live   |
+| project  | /project/dremel_lab      | 9702184099328| 9.702 | live   |
++----------+--------------------------+--------------+-------+--------+
+```
+
+In a terminal, each `Location` row is color-coded (scratch/home/standard/project), and the `Bytes`/`TB`/`Source` columns are colored green for a live measurement, yellow for a cached (stale) fallback, and red for `NA`/failed — so a scan at a glance shows which locations are running low on quota and whether the numbers are fresh.
+
 All three scripts live under `/project/dremel_lab/scripts/bin` on Rivanna, and are made available on `$PATH` to every `dremel_lab` group member who sources `.sh_common` in their `~/.bashrc`:
 
 ```bash
